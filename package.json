@@ -1,0 +1,30 @@
+{
+  "name": "leetcode-sync",
+  "version": "0.1.0",
+  "description": "Chrome Extension that automatically syncs accepted LeetCode solutions to a GitHub repository.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --no-warnings --import ./scripts/register-ts.mjs --test \"tests/**/*.test.ts\""
+  },
+  "keywords": [
+    "leetcode",
+    "github",
+    "chrome-extension",
+    "manifest-v3",
+    "typescript"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.7.0",
+    "@types/chrome": "^0.2.0",
+    "@types/node": "^26.0.1",
+    "sharp": "^0.35.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.0"
+  }
+}

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeetCode Sync — Settings</title>
+    <link rel="stylesheet" href="./options.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="head">
+        <h1>LeetCode&nbsp;Sync</h1>
+        <p class="subtitle">Settings</p>
+      </header>
+
+      <!-- GitHub account -->
+      <section class="card">
+        <h2>GitHub account</h2>
+        <p class="hint">
+          Create a
+          <a
+            href="https://github.com/settings/tokens?type=beta"
+            target="_blank"
+            rel="noreferrer"
+            >fine-grained Personal Access Token</a
+          >
+          with <strong>Contents: Read and write</strong> permission for the
+          target repository.
+        </p>
+
+        <label class="field">
+          <span class="label">Personal Access Token</span>
+          <input
+            id="token"
+            type="password"
+            autocomplete="off"
+            placeholder="github_pat_…"
+          />
+        </label>
+
+        <div class="btn-row">
+          <button id="connect-btn" class="btn btn-primary">
+            Connect &amp; verify
+          </button>
+          <button id="remove-token-btn" class="btn btn-ghost">
+            Remove token
+          </button>
+        </div>
+        <p id="account-status" class="status"></p>
+      </section>
+
+      <!-- Repository -->
+      <section class="card">
+        <h2>Repository</h2>
+        <div class="grid-2">
+          <label class="field">
+            <span class="label">Owner / username</span>
+            <input id="username" type="text" placeholder="octocat" />
+          </label>
+          <label class="field">
+            <span class="label">Repository</span>
+            <input id="repo" type="text" placeholder="leetcode" />
+          </label>
+        </div>
+        <label class="field">
+          <span class="label">Default branch</span>
+          <input id="branch" type="text" placeholder="main" />
+        </label>
+        <div class="btn-row">
+          <button id="test-repo-btn" class="btn btn-ghost">
+            Test repository
+          </button>
+        </div>
+        <p id="repo-status" class="status"></p>
+      </section>
+
+      <!-- File organization -->
+      <section class="card">
+        <h2>File organization</h2>
+        <label class="field">
+          <span class="label">Root folder (blank = repo root)</span>
+          <input id="rootFolder" type="text" placeholder="LeetCode" />
+        </label>
+        <div class="grid-2">
+          <label class="field">
+            <span class="label">Folder structure</span>
+            <select id="folderNaming">
+              <option value="by-difficulty">By difficulty (Easy/…)</option>
+              <option value="flat">Flat (no subfolders)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="label">File naming</span>
+            <select id="fileNaming">
+              <option value="number-title">1. Two Sum.py</option>
+              <option value="padded-snake">0001_Two_Sum.py</option>
+            </select>
+          </label>
+        </div>
+        <label class="toggle">
+          <input id="perProblemFolder" type="checkbox" />
+          <span
+            >Each problem in its own folder with a README (time/space
+            complexity &amp; notes)</span
+          >
+        </label>
+        <p class="preview">
+          Path preview: <code id="path-preview">—</code>
+        </p>
+      </section>
+
+      <!-- Commit message -->
+      <section class="card">
+        <h2>Commit message</h2>
+        <label class="field">
+          <span class="label">Template</span>
+          <input
+            id="commitTemplate"
+            type="text"
+            placeholder="LeetCode: Solve #{number} {title}"
+          />
+        </label>
+        <p class="hint">
+          Variables:
+          <code>{number}</code> <code>{title}</code>
+          <code>{difficulty}</code> <code>{language}</code> <code>{date}</code>
+        </p>
+        <p class="preview">
+          Preview: <code id="commit-preview">—</code>
+        </p>
+      </section>
+
+      <!-- Sync options -->
+      <section class="card">
+        <h2>Sync options</h2>
+        <label class="toggle">
+          <input id="autoSync" type="checkbox" />
+          <span>Automatically sync on accepted submission</span>
+        </label>
+        <label class="toggle">
+          <input id="includeReadme" type="checkbox" />
+          <span>Generate a progress README <em>(experimental)</em></span>
+        </label>
+        <label class="toggle">
+          <input id="includeNotes" type="checkbox" />
+          <span>Add a metadata header to each file <em>(experimental)</em></span>
+        </label>
+      </section>
+
+      <div class="actions">
+        <button id="save-btn" class="btn btn-primary">Save settings</button>
+        <button id="reset-btn" class="btn btn-ghost">Reset to defaults</button>
+        <span id="toast" class="toast"></span>
+      </div>
+    </div>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

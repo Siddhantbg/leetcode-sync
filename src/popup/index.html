@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeetCode Sync</title>
+    <link rel="stylesheet" href="./popup.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="header">
+        <h1>LeetCode&nbsp;Sync</h1>
+        <span id="conn-indicator" class="conn">
+          <span class="dot"></span>
+          <span id="conn-label" class="conn-label">…</span>
+        </span>
+      </header>
+
+      <!-- Shown when token + repo are not yet configured -->
+      <section id="disconnected" class="panel hidden">
+        <p class="muted">
+          Connect your GitHub account and choose a repository to start syncing.
+        </p>
+        <button id="setup-btn" class="btn btn-primary">Open settings</button>
+      </section>
+
+      <!-- Shown when configured -->
+      <main id="connected" class="content hidden">
+        <div class="row">
+          <span class="row-label">Account</span>
+          <span id="account" class="row-value">—</span>
+        </div>
+        <div class="row">
+          <span class="row-label">Repository</span>
+          <span id="repo" class="row-value">—</span>
+        </div>
+        <div class="row">
+          <span class="row-label">Status</span>
+          <span id="status-badge" class="badge badge-idle">idle</span>
+        </div>
+        <p id="status-error" class="error hidden"></p>
+        <p id="status-detail" class="muted small hidden"></p>
+
+        <div class="card">
+          <div class="card-title">Last synced</div>
+          <div id="last-empty" class="muted small">Nothing synced yet.</div>
+          <div id="last-synced" class="last hidden">
+            <div class="last-line">
+              <span id="last-title" class="last-title">—</span>
+              <span id="last-diff" class="pill">—</span>
+            </div>
+            <div class="last-meta">
+              <span id="last-lang">—</span>
+              <span class="sep">·</span>
+              <span id="last-time">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div id="stat-total" class="stat-num">0</div>
+            <div class="stat-label">Synced</div>
+          </div>
+          <div class="stat">
+            <div id="stat-easy" class="stat-num easy">0</div>
+            <div class="stat-label">Easy</div>
+          </div>
+          <div class="stat">
+            <div id="stat-medium" class="stat-num medium">0</div>
+            <div class="stat-label">Medium</div>
+          </div>
+          <div class="stat">
+            <div id="stat-hard" class="stat-num hard">0</div>
+            <div class="stat-label">Hard</div>
+          </div>
+          <div class="stat">
+            <div id="stat-streak" class="stat-num">0</div>
+            <div class="stat-label">Streak</div>
+          </div>
+        </div>
+
+        <section class="card solutions-card">
+          <div class="card-title">Solutions</div>
+          <div id="solutions-problem" class="solutions-problem hidden"></div>
+          <ul id="solutions-list" class="solutions"></ul>
+          <p id="solutions-empty" class="muted small hidden"></p>
+          <button id="add-btn" type="button" class="link-btn">
+            + Add solution manually
+          </button>
+        </section>
+
+        <section id="add-panel" class="editor hidden">
+          <div class="editor-title">
+            Name a new solution
+            <span class="editor-path">
+              It appears in the list above. Keep it selected and submit on
+              LeetCode — the accepted code is saved in its own folder.
+            </span>
+          </div>
+          <label class="notes-field">
+            <span class="notes-label">Name</span>
+            <input
+              id="newLabel"
+              type="text"
+              autocomplete="off"
+              placeholder="e.g. Brute Force, Optimal, Two Pointers"
+            />
+          </label>
+          <div class="editor-actions">
+            <button id="add-confirm-btn" type="button" class="btn btn-primary">
+              Add solution
+            </button>
+            <button id="add-cancel-btn" type="button" class="btn btn-ghost">
+              Cancel
+            </button>
+          </div>
+        </section>
+
+        <section id="solution-editor" class="editor hidden">
+          <div class="editor-title">
+            <span id="editor-heading">Solution details</span>
+            <span id="editor-path" class="editor-path"></span>
+          </div>
+          <label class="notes-field">
+            <span class="notes-label">Label</span>
+            <input id="solutionLabel" type="text" autocomplete="off" />
+          </label>
+          <div class="cx-row">
+            <label class="cx-field">
+              <span class="notes-label">Time complexity</span>
+              <input id="timeComplexity" type="text" autocomplete="off" />
+            </label>
+            <label class="cx-field">
+              <span class="notes-label">Space complexity</span>
+              <input id="spaceComplexity" type="text" autocomplete="off" />
+            </label>
+          </div>
+          <label class="notes-field">
+            <span class="notes-label">Notes</span>
+            <textarea
+              id="notes"
+              rows="2"
+              placeholder="e.g. Scan from the right, carrying the running max…"
+            ></textarea>
+          </label>
+          <p id="editor-hint" class="cx-hint">
+            Leave label or complexity empty to use the automatic value.
+          </p>
+          <div class="editor-actions">
+            <button id="save-solution-btn" type="button" class="btn btn-primary">
+              Save details
+            </button>
+            <button id="remove-slot-btn" type="button" class="btn btn-ghost hidden">
+              Remove
+            </button>
+          </div>
+        </section>
+
+        <p id="notes-target" class="notes-target hidden"></p>
+
+        <div class="actions">
+          <button id="sync-btn" class="btn btn-primary">Force sync</button>
+          <button id="settings-btn" class="btn btn-ghost">Settings</button>
+        </div>
+        <p class="cx-hint">
+          Accepted submissions are saved automatically. To choose the folder
+          yourself, add a named solution, keep it selected and submit.
+        </p>
+      </main>
+
+      <footer class="footer">
+        <span id="toast" class="toast"></span>
+      </footer>
+    </div>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
